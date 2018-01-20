@@ -1,0 +1,31 @@
+# source this file before source oh-my-zsh.sh
+# oh-my-zsh config
+ZSH_THEME="powerlevel9k/powerlevel9k"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs history time)
+#POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_unique"
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+plugins=(
+  git
+  git-extras
+  colored-man-pages
+  colorize
+  sudo
+  command-not-found
+  cp
+  gnu-utils
+  autojump
+  sublime
+  urltools
+  httpie
+  terminitor
+  yarn
+)
+
+# fix macOS with Gnu Core utils.
+eval `gdircolors`
+
+curl -Ssfx http://127.0.0.1:6152 google.com/ncr > /dev/null && export https_proxy=http://127.0.0.1:6152 && export http_proxy=http://127.0.0.1:6152 && export all_proxy=socks5://127.0.0.1:6153
+
