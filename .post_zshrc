@@ -4,7 +4,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 # echo 'use hxsf config'
 # other config
-
+export GOPATH=$HOME/workspace/go
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
 export HOMEBREW_AUTO_UPDATE_SECS=36000

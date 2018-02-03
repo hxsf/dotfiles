@@ -15,7 +15,7 @@ brew install gnutls gawk
 brew install grep --with-default-names
 brew install gnu-tar --with-default-names
 brew install git --with-blk-sha1 --with-curl --with-gettext --with-openssl --with-pcre2 
-brew install stormssh mycli pgcli gcc fontforge wget jq tmux yarn caddy go ruby zsh-completions python3 oath-toolkit qrencode zbar smartmontools p7zip watch fish htop httpie
+brew install stormssh mycli pgcli gcc fontforge wget jq tmux yarn caddy go dep ruby zsh-completions python3 oath-toolkit qrencode zbar smartmontools p7zip watch fish htop httpie
 
 gem source -r https://rubygems.org/
 gem source -a http://mirrors.aliyun.com/rubygems/
