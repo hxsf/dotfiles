@@ -7,6 +7,13 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
+ln -s $DIR/.vimrc ~/
+ln -s $DIR/.tmux.conf ~/
+
+sed -i 's#source $ZSH/oh-my-zsh.sh#source '$DIR'/.pre_zshrc\
+source $ZSH/oh-my-zsh.sh\
+source '$DIR'/.post_zshrc#g' ~/.zshrc
+
 brew install coreutils --with-gmp
 brew install findutils --with-default-names
 brew install gnu-indent --with-default-names
@@ -26,9 +33,4 @@ brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize we
 # yarn config set https-proxy http://127.0.0.1:6152
 yarn global add typescript browser-sync ts-node nodemon
 
-ln -s $DIR/.vimrc ~/
-ln -s $DIR/.tmux.conf ~/
 
-sed -i 's#source $ZSH/oh-my-zsh.sh#source '$DIR'/.pre_zshrc\
-source $ZSH/oh-my-zsh.sh\
-source '$DIR'/.post_zshrc#g' ~/.zshrc
