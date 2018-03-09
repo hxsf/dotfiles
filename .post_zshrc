@@ -1,7 +1,7 @@
 PREFIX=`dirname $0`
 export EDITOR=vim
 fpath=(/usr/local/share/zsh-completions $fpath)
-
+export GOPATH=/Users/hxsf/workspace/go
 # echo 'use hxsf config'
 # other config
 export GOPATH=$HOME/workspace/go
@@ -9,8 +9,8 @@ function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
 export HOMEBREW_AUTO_UPDATE_SECS=36000
 export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
@@ -43,5 +43,17 @@ function totp {
 }
 
 alias qrdecode=zbarimg
+
+h=()
+if [[ -r ~/.ssh/config ]]; then
+  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
+fi
+#if [[ -r ~/.ssh/known_hosts ]]; then
+#  h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
+#fi
+if [[ $#h -gt 0 ]]; then
+  zstyle ':completion:*:ssh:*' hosts $h
+  zstyle ':completion:*:slogin:*' hosts $h
+fi
 
 

@@ -21,6 +21,7 @@ plugins=(
   urltools
   httpie
   terminitor
+  docker
   yarn
 )
 
