@@ -14,20 +14,14 @@ sed -i 's#source $ZSH/oh-my-zsh.sh#source '$DIR'/.pre_zshrc\
 source $ZSH/oh-my-zsh.sh\
 source '$DIR'/.post_zshrc#g' ~/.zshrc
 
-brew install coreutils --with-gmp
-brew install findutils --with-default-names
-brew install gnu-indent --with-default-names
-brew install gnu-sed --with-default-names
-brew install gnutls gawk
-brew install grep --with-default-names
-brew install gnu-tar --with-default-names
-brew install git --with-blk-sha1 --with-curl --with-gettext --with-openssl --with-pcre2 
-brew install stormssh mycli pgcli gcc fontforge wget jq tmux yarn caddy go dep ruby zsh-completions python3 oath-toolkit qrencode zbar smartmontools p7zip watch fish htop httpie
+cd $DIR
+brew bundle
 
 gem source -r https://rubygems.org/
 gem source -a http://mirrors.aliyun.com/rubygems/
 sudo gem install tmuxinator
-brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize webpquicklook suspicious-package quicklookase qlvideo
+
+ln -s $DIR/imgcat /usr/bin/
 
 # yarn config set http-proxy http://127.0.0.1:6152
 # yarn config set https-proxy http://127.0.0.1:6152
