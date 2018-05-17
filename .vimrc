@@ -1,4 +1,4 @@
-set nocompatible
+
 
 syntax on
 set autoindent

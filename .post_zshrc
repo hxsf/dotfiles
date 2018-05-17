@@ -1,7 +1,7 @@
 PREFIX=`dirname $0`
 export EDITOR=vim
 fpath=(/usr/local/share/zsh-completions $fpath)
-export GOPATH=/Users/hxsf/workspace/go
+export GOPATH=$HOME/workspace/go
 # echo 'use hxsf config'
 # other config
 export GOPATH=$HOME/workspace/go
@@ -11,6 +11,8 @@ export HOMEBREW_AUTO_UPDATE_SECS=36000
 export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+
+PATH="/usr/local/sbin:$GOPATH/bin:$HOME/flutter/bin:$PATH"
 
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"

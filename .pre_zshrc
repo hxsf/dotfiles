@@ -27,6 +27,6 @@ plugins=(
 
 # fix macOS with Gnu Core utils.
 eval `gdircolors`
-
-curl -Ssfx http://127.0.0.1:6152 google.com/ncr > /dev/null && export https_proxy=http://127.0.0.1:6152 && export http_proxy=http://127.0.0.1:6152 && export all_proxy=socks5://127.0.0.1:6153
+export no_proxy="127.0.0.1,192.168.0.0/16,193.168.0.0/24,172.16.0.0/12,100.64.0.0/10,localhost,*.local,e.crashlytics.com,captive.apple.com"
+curl -Ssfx -m 2 http://127.0.0.1:6152 google.com/ncr > /dev/null && export https_proxy=http://127.0.0.1:6152 && export http_proxy=http://127.0.0.1:6152 && export all_proxy=socks5://127.0.0.1:6153
 
