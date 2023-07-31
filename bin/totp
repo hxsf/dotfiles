@@ -1,0 +1,16 @@
+#!/bin/bash
+OATH_KEY_HOME=$HOME/.bin/otp
+
+if [ -f $OATH_KEY_HOME/$1 ]
+then
+	CODE=$(oathtool --totp -b -d 6 `cat $OATH_KEY_HOME/$1`)
+	if [ `uname` = 'Darwin' ] && [ "$2" != "--nocopy" ]
+	then
+		echo -n $CODE | pbcopy
+	fi
+	echo "$CODE"
+else
+	echo "No key specified, or key not found."
+	echo "Available keys:"
+	gls --color=tty $OATH_KEY_HOME
+fi

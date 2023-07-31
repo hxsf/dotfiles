@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+# Convert flac to alac (m4a) with cover art
+# Usage: flac2alac [file.flac...]
+for i in "$@"; do
+    source="$i";
+    dist="$(dirname "$i")/$(basename -s .flac "$i").m4a";
+    cover="$(dirname "$i")/$(basename -s .flac "$i")-cover.jpg";
+    echo "source: $source";
+    echo "dist: $dist";
+    echo "cover:$cover";
+    ffmpeg -v warning -i "$source" -y -vn -c:a alac "$dist" "$cover";
+    sleep 0.1;
+    atomicparsley "$dist" --artwork "$cover" --overWrite;
+    rm -f "$cover";
+done

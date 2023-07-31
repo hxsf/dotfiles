@@ -27,7 +27,7 @@ ln -s $DIR/imgcat /usr/bin/
 # yarn config set https-proxy http://127.0.0.1:6152
 yarn global add typescript browser-sync ts-node nodemon
 
-ln -s $DIR/services/homebrew.hxsf.aria2.plist /usr/local/opt/aria2/
+ln -s $HOME/.bin/services/homebrew.mxcl.aria2.plist /usr/local/opt/aria2/homebrew.mxcl.aria2.plist
 mkdir -p ~/.aria2
 ln -s $DIR/aria2.conf ~/.aria2/
 

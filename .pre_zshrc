@@ -1,15 +1,27 @@
 # source this file before source oh-my-zsh.sh
+
+export HOMEBREW_GITHUB_API_TOKEN='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'
+export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+export RUSTUP_DIST_SERVER="https://rsproxy.cn"
+export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
+
+
+export ANDROID_HOME=/Volumes/FusionDrive/Android_SDK
+export JAVA_HOME=`/usr/libexec/java_home`
+
+PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 # oh-my-zsh config
 ZSH_THEME="powerlevel9k/powerlevel9k"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir vcs virtualenv)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs history time)
 #POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_unique"
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 plugins=(
-  git
+  git-flow
   git-extras
+  zsh-completions
   colored-man-pages
   colorize
   sudo
@@ -18,15 +30,31 @@ plugins=(
   gnu-utils
   autojump
   sublime
-  urltools
   httpie
   terminitor
   docker
   yarn
+  virtualenv
+  virtualenvwrapper
 )
 
 # fix macOS with Gnu Core utils.
 eval `gdircolors`
 export no_proxy="127.0.0.1,192.168.0.0/16,193.168.0.0/24,172.16.0.0/12,100.64.0.0/10,localhost,*.local,e.crashlytics.com,captive.apple.com"
-curl -Ssf -m 2 -x http://127.0.0.1:6152 google.com/ncr > /dev/null && export https_proxy=http://127.0.0.1:6152 && export http_proxy=http://127.0.0.1:6152 && export all_proxy=socks5://127.0.0.1:6153
+#curl -Ssf -m 2 -x http://127.0.0.1:6152 google.com/ncr > /dev/null &&
+function setproxy() {
+	export https_proxy=http://127.0.0.1:6152 && export http_proxy=http://127.0.0.1:6152 && export all_proxy=socks5://127.0.0.1:6153
+}
+setproxy
+function clearproxy () {
+	unset https_proxy
+	unset http_proxy
+	unset all_proxy
+}
 
+alias htop="sudo htop"
+
+alias urlencode="node -e 'function read_all(reader, callback) { const buffer = [];reader.once(\"end\", () => callback(undefined, Buffer.concat(buffer).toString()));reader.on(\"data\", chunk => buffer.push(chunk))};if (process.argv[1]) { process.stdout.write(encodeURIComponent(process.argv[1]))} else { read_all(process.stdin, (_, x) => process.stdout.write(encodeURIComponent(x))) } '"
+alias urldecode="node -e 'function read_all(reader, callback) { const buffer = [];reader.once(\"end\", () => callback(undefined, Buffer.concat(buffer).toString()));reader.on(\"data\", chunk => buffer.push(chunk))};if (process.argv[1]) { process.stdout.write(decodeURIComponent(process.argv[1]))} else { read_all(process.stdin, (_, x) => process.stdout.write(decodeURIComponent(x))) } '"
+
+export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"

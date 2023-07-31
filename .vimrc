@@ -1,5 +1,3 @@
-
-
 syntax on
 set autoindent
 
@@ -12,8 +10,8 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 
-set ai!
-set cindent shiftwidth=4
+" set ai!
+" set cindent shiftwidth=4
 
 set number
 set ruler

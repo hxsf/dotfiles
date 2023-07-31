@@ -1,4 +1,3 @@
-PREFIX=`dirname $0`
 export EDITOR=vim
 fpath=(/usr/local/share/zsh-completions $fpath)
 export GOPATH=$HOME/workspace/go
@@ -6,27 +5,73 @@ export GOPATH=$HOME/workspace/go
 # other config
 export GOPATH=$HOME/workspace/go
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
+function tping() {ping $1 | xargs -I '{}' date "+%Y-%m-%d %H:%M:%S [$1] {}"}
+function tping() {ping $1 | xargs -I '{}' date "+%H:%M:%S [$1] {}"}
 
 export HOMEBREW_AUTO_UPDATE_SECS=36000
-export HOMEBREW_BOTTLE_DOMAIN=http://7xkcej.dl1.z0.glb.clouddn.com
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.cloud.tencent.com/homebrew-bottles"
+export HOMEBREW_BREW_GIT_REMOTE="https://git.hxsf.work/homebrew/brew.git"
+export HOMEBREW_CORE_GIT_REMOTE="https://git.hxsf.work/homebrew/homebrew-core.git"
+export HOMEBREW_PIP_INDEX_URL="https://mirrors.cloud.tencent.com/pypi/simple"
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/bottles
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles/bottles
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles/bottles
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.cloud.tencent.com/homebrew-bottles
 
-PATH="/usr/local/sbin:$GOPATH/bin:$HOME/flutter/bin:$PATH"
+PATH="$HOME/.bin/bin:/usr/local/sbin:$GOPATH/bin:$HOME/flutter/bin:$PATH"
 
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:$HOME/.bin/bin"
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 PS1='%{$fg[green]%}TC%{$reset_color%} '$PS1
 
+
+DOT_HOME=$(dirname $0)
 # add tmuxinator Completion
-source $PREFIX/.tmuxinator.zsh;
+. $DOT_HOME/.tmuxinator.zsh;
+
+function add_routes {
+    ROUTE_SCRIPT=$DOT_HOME/routes.sh
+    if [ -f $ROUTE_SCRIPT ]; then
+        sudo bash $ROUTE_SCRIPT
+    else
+        echo "$ROUTE_SCRIPT not found"
+    fi
+}
+
+function rm_routes {
+    ROUTE_SCRIPT=$DOT_HOME/routes.sh
+    if [ -f $ROUTE_SCRIPT ]; then
+        sudo bash $ROUTE_SCRIPT -D
+    else
+        echo "$ROUTE_SCRIPT not found"
+    fi
+}
 
 
+function add_routes_online {
+    ROUTE_SCRIPT=$DOT_HOME/online_routes.sh
+    if [ -f $ROUTE_SCRIPT ]; then
+        sudo bash $ROUTE_SCRIPT
+    else
+        echo "$ROUTE_SCRIPT not found"
+    fi
+}
 
-OATH_KEY_HOME=`dirname $0`/otp/
+function rm_routes_online {
+    ROUTE_SCRIPT=$DOT_HOME/online_routes.sh
+    if [ -f $ROUTE_SCRIPT ]; then
+        sudo bash $ROUTE_SCRIPT -D
+    else
+        echo "$ROUTE_SCRIPT not found"
+    fi
+}
 
-function totp { 
+
+OATH_KEY_HOME=${DOT_HOME}/otp/
+
+function _totp { 
   if [ -f $OATH_KEY_HOME/$1 ]
     then
       CODE=$(oathtool --totp -b -d 6 `cat $OATH_KEY_HOME/$1`)
@@ -43,6 +88,8 @@ function totp {
     ls $OATH_KEY_HOME
   fi
 }
+fpath+=~/.zfunc
+autoload -U compinit && compinit
 
 alias qrdecode=zbarimg
 
@@ -58,4 +105,19 @@ if [[ $#h -gt 0 ]]; then
   zstyle ':completion:*:slogin:*' hosts $h
 fi
 
+eval $(thefuck --alias)
 
+
+MIRROR_HOST=${MIRROR_HOST:-harbor.hxsf.work}
+
+function mirror_gcr() {
+    echo "mirror $1 to $MIRROR_HOST/$1" \
+    && docker pull "$1" \
+    && docker tag "$1" "$MIRROR_HOST/$1" \
+    && docker push "$MIRROR_HOST/$1" \
+    && docker rmi "$MIRROR_HOST/$1" \
+    && docker rmi "$1" \
+    && echo "Done!"
+}
+
+alias nocolor="sed 's/\x1b\[[0-9;]*m//g'"
